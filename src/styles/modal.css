@@ -15,6 +15,7 @@
   pointer-events: none;
   transition: opacity var(--transition-base);
 }
+
 .modal-overlay.open {
   opacity: 1;
   pointer-events: all;
@@ -31,7 +32,10 @@
   transform: translateY(20px);
   transition: transform var(--transition-base);
 }
-.modal-overlay.open .modal { transform: translateY(0); }
+
+.modal-overlay.open .modal {
+  transform: translateY(0);
+}
 
 .modal-title {
   font-family: var(--font-head);
@@ -39,6 +43,7 @@
   font-weight: 800;
   margin-bottom: 8px;
 }
+
 .modal-sub {
   font-size: 13.5px;
   color: var(--muted);
@@ -51,6 +56,7 @@
   gap: 8px;
   margin-bottom: 28px;
 }
+
 .step-dot {
   height: 3px;
   flex: 1;
@@ -58,8 +64,14 @@
   background: rgba(255, 255, 255, 0.1);
   transition: background var(--transition-slow);
 }
-.step-dot.done   { background: var(--green); }
-.step-dot.active { background: var(--blue); }
+
+.step-dot.done {
+  background: var(--green);
+}
+
+.step-dot.active {
+  background: var(--blue);
+}
 
 /* Form fields inside modal */
 .modal-form {
@@ -67,6 +79,7 @@
   flex-direction: column;
   gap: 14px;
 }
+
 .modal-field label {
   display: block;
   font-size: 11px;
@@ -76,6 +89,7 @@
   letter-spacing: 0.5px;
   margin-bottom: 7px;
 }
+
 .modal-field input,
 .modal-field select {
   width: 100%;
@@ -89,8 +103,11 @@
   outline: none;
   transition: border-color var(--transition-base);
 }
+
 .modal-field input:focus,
-.modal-field select:focus { border-color: var(--blue); }
+.modal-field select:focus {
+  border-color: var(--blue);
+}
 
 .modal-row {
   display: grid;
@@ -101,7 +118,56 @@
 .modal-actions {
   display: flex;
   gap: 10px;
-  margin-top: 8px;
+  margin-top: 18px;
+}
+
+/* Payment Methods Grid */
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.payment-method-card {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.payment-method-card:hover {
+  border-color: var(--blue-glow);
+}
+
+.payment-method-card.selected {
+  border-color: var(--blue);
+  background: rgba(26, 107, 255, 0.05);
+}
+
+.pmc-icon {
+  font-size: 24px;
+}
+
+.pmc-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.pmc-check {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 12px;
+  color: var(--blue);
+  font-weight: 800;
 }
 
 /* Payment summary box */
@@ -112,18 +178,24 @@
   padding: 16px;
   margin-top: 8px;
 }
+
 .payment-summary-box .psb-label {
   font-size: 12px;
   color: var(--muted);
   margin-bottom: 8px;
 }
+
 .psb-row {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
   margin-bottom: 6px;
 }
-.psb-row.sub { color: var(--muted); }
+
+.psb-row.sub {
+  color: var(--muted);
+}
+
 .psb-row.total-row {
   font-size: 16px;
   font-weight: 700;
@@ -131,42 +203,127 @@
   border-top: 1px solid var(--border);
   padding-top: 10px;
 }
-.psb-row.total-row span:last-child { color: var(--green); }
+
+.psb-row.total-row span:last-child {
+  color: var(--green);
+}
 
 /* Confirmation step */
-.confirm-screen { text-align: center; }
-.confirm-emoji  { font-size: 64px; margin-bottom: 16px; }
-.confirm-title  {
+.confirm-screen {
+  text-align: center;
+}
+
+.confirm-emoji {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.confirm-title {
   font-family: var(--font-head);
   font-size: 22px;
   font-weight: 800;
   margin-bottom: 8px;
   color: var(--green);
 }
-.confirm-sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+
+.confirm-sub {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* QR Code Mockup */
+.confirm-qr-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.qr-mock {
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-inner {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  width: 100%;
+  height: 100%;
+  gap: 4px;
+}
+
+.qr-pixel {
+  background: #000;
+  border-radius: 2px;
+}
+
+.qr-scan-text {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .confirm-ticket-box {
   background: var(--bg);
   border-radius: 14px;
-  padding: 20px;
+  padding: 24px;
   border: 1px solid var(--border);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
 }
+
+.confirm-ticket-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--green);
+}
+
 .confirm-route {
   font-family: var(--font-head);
   font-size: 18px;
   font-weight: 800;
   margin-bottom: 4px;
 }
-.confirm-details { font-size: 13px; color: var(--muted); }
+
+.confirm-details {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.confirm-id-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  margin-top: 16px;
+}
+
 .confirm-id {
   background: var(--surface2);
   border-radius: 8px;
-  padding: 16px;
-  margin-top: 16px;
+  padding: 12px;
+  margin-top: 6px;
   font-family: monospace;
-  font-size: 24px;
+  font-size: 20px;
   letter-spacing: 4px;
   font-weight: 700;
+  color: #fff;
 }
 
 /* Close button */
@@ -182,4 +339,7 @@
   transition: color var(--transition-base);
   line-height: 1;
 }
-.close-modal:hover { color: var(--text); }
+
+.close-modal:hover {
+  color: var(--text);
+}

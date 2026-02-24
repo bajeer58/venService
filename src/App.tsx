@@ -18,6 +18,7 @@ import HomePage from './pages/HomePage';
 import BookingPage from './pages/BookingPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import VerifyPage from './pages/VerifyPage';
+import DriverDashboardPage from './pages/DriverDashboardPage'; // <-- Added Import
 
 export default function App() {
   return (
@@ -45,15 +46,16 @@ export default function App() {
                   <Route path="/admin" element={<AdminDashboardPage />} />
                 </Route>
 
-                {/* Specific Driver protected route (Example) */}
+                {/* Driver protected route */}
                 <Route
-                  path="/driver"
                   element={
                     <ProtectedRoute allowedRoles={['driver']}>
-                      <div className="p-10 text-white">Driver Dashboard coming soon...</div>
+                      <DashboardLayout />
                     </ProtectedRoute>
                   }
-                />
+                >
+                  <Route path="/driver" element={<DriverDashboardPage />} />
+                </Route>
               </Routes>
             </AnimatePresence>
           </BookingProvider>

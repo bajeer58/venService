@@ -40,7 +40,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 220px;
+  width: var(--sidebar-width);
   height: 100vh;
   background: var(--surface);
   border-right: 1px solid var(--border);
@@ -48,6 +48,7 @@
   flex-direction: column;
   padding-top: 20px;
   z-index: 90;
+  transition: width var(--transition-base);
 }
 
 .sidebar-brand {
@@ -100,19 +101,41 @@
 
 /* ── Dashboard responsive fixes ── */
 @media (max-width: 900px) {
-  .admin-sidebar {
-    width: 60px;
+  :root {
+    --sidebar-offset: var(--sidebar-collapsed-width);
   }
+
+  .admin-sidebar {
+    width: var(--sidebar-collapsed-width);
+  }
+
   .sidebar-label,
   .sidebar-brand .logo span {
     display: none;
   }
+
   .sidebar-nav {
     padding: 16px 6px;
   }
+
   .sidebar-item {
     justify-content: center;
     padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --sidebar-offset: 0px;
+  }
+
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .admin-sidebar.mobile-open {
+    transform: translateX(0);
+    width: var(--sidebar-width);
   }
 }
 

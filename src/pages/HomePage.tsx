@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useBooking } from '../context/BookingContextInstance';
 import { useToast } from '../context/ToastContextInstance';
+import { useAuth } from '../hooks/useAuth';
 import {
   POPULAR_ROUTES, QUICK_ROUTES, HOW_IT_WORKS,
   FEATURES, HERO_STATS, CITIES,
@@ -16,7 +17,6 @@ import AnimatedCounter from '../components/ui/AnimatedCounter';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
-import { useAuth } from '../hooks/useAuth';
 
 import type { UserRole } from '../types';
 
@@ -50,6 +50,35 @@ export default function HomePage() {
         <div className="hero-grid-bg" />
         <div className="hero-orb" />
 
+        {/* Dev Tools Dropdown (Moved here for better integration) */}
+        <div style={{ position: 'absolute', top: 120, right: 40, zIndex: 100 }}>
+          <details style={{ background: 'rgba(0,0,0,0.6)', padding: '10px', borderRadius: '8px', border: '1px solid #333', backdropFilter: 'blur(10px)' }}>
+            <summary style={{ cursor: 'pointer', color: '#aaa', fontSize: '11px', fontWeight: 600 }}>🔧 DEV TOOLS: RBAC LOGIN</summary>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
+              {['Passenger', 'Staff', 'Admin', 'Driver'].map((role) => (
+                <button
+                  key={role}
+                  onClick={() => login(`test-${role.toLowerCase()}@example.com`, role.toLowerCase() as UserRole)}
+                  style={{
+                    background: user?.role === role.toLowerCase() ? 'var(--blue)' : 'rgba(255,255,255,0.1)',
+                    color: 'white', border: 'none', padding: '8px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer', transition: 'all 0.2s', fontWeight: 600
+                  }}
+                >
+                  Login as {role}
+                </button>
+              ))}
+              {user && (
+                <button
+                  onClick={logout}
+                  style={{ background: 'rgba(255, 68, 68, 0.2)', color: '#ff4444', border: '1px solid rgba(255, 68, 68, 0.4)', padding: '8px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer', marginTop: '4px', fontWeight: 600 }}
+                >
+                  Logout ({user.role})
+                </button>
+              )}
+            </div>
+          </details>
+        </div>
+
         <motion.div
           className="hero-badge"
           initial={{ opacity: 0, y: -20 }}
@@ -78,50 +107,6 @@ export default function HomePage() {
           Real-time seat selection, QR-coded tickets, and live van tracking — all in one platform for
           passengers, staff, and operators.
         </motion.p>
-
-        {/* Mock Login Section for Testing RBAC */}
-        <motion.div
-          className="mock-auth-test"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap', justifyContent: 'center' }}
-        >
-          {['Passenger', 'Staff', 'Admin', 'Driver'].map((role) => (
-            <button
-              key={role}
-              onClick={() => login(`test-${role.toLowerCase()}@example.com`, role.toLowerCase() as UserRole)}
-              style={{
-                background: user?.role === role.toLowerCase() ? 'var(--accent)' : 'rgba(255,255,255,0.1)',
-                color: 'white',
-                border: '1px solid rgba(255,255,255,0.2)',
-                padding: '6px 12px',
-                borderRadius: '20px',
-                fontSize: '12px',
-                cursor: 'pointer',
-                transition: 'all 0.2s'
-              }}
-            >
-              Login as {role}
-            </button>
-          ))}
-          {user && (
-            <button
-              onClick={logout}
-              style={{
-                background: 'rgba(255, 100, 100, 0.2)',
-                color: '#ff6b6b',
-                border: '1px solid #ff6b6b',
-                padding: '6px 12px',
-                borderRadius: '20px',
-                fontSize: '12px',
-                cursor: 'pointer'
-              }}
-            >
-              Logout ({user.name})
-            </button>
-          )}
-        </motion.div>
 
         {/* Search card */}
         <motion.div
@@ -153,6 +138,7 @@ export default function HomePage() {
               <label>Date</label>
               <input
                 type="date"
+                min={new Date().toISOString().split('T')[0]}
                 value={state.travelDate}
                 onChange={(e) => setDate(e.target.value)}
               />

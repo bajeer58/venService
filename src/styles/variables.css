@@ -4,55 +4,59 @@
    ───────────────────────────────────────────── */
 :root {
   /* Brand colors */
-  --blue:        #1a6bff;
-  --blue-glow:   rgba(26, 107, 255, 0.35);
-  --blue-dim:    rgba(26, 107, 255, 0.12);
-  --green:       #00d68f;
-  --amber:       #f5a623;
-  --red:         #ff4757;
+  --blue: #1a6bff;
+  --blue-glow: rgba(26, 107, 255, 0.35);
+  --blue-dim: rgba(26, 107, 255, 0.12);
+  --green: #00d68f;
+  --amber: #f5a623;
+  --red: #ff4757;
 
   /* Surfaces */
-  --bg:          #0a0d14;
-  --surface:     #111520;
-  --surface2:    #161c2d;
-  --border:      rgba(255, 255, 255, 0.07);
+  --bg: #0a0d14;
+  --surface: #111520;
+  --surface2: #161c2d;
+  --border: rgba(255, 255, 255, 0.07);
 
   /* Text */
-  --text:        #e8eaf2;
-  --muted:       #6b7394;
+  --text: #e8eaf2;
+  --muted: #6b7394;
 
   /* Typography */
-  --font-head:   'Syne', sans-serif;
-  --font-body:   'DM Sans', sans-serif;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
 
   /* Spacing scale */
-  --gap-xs:  4px;
-  --gap-sm:  8px;
-  --gap-md:  16px;
-  --gap-lg:  24px;
-  --gap-xl:  40px;
+  --gap-xs: 4px;
+  --gap-sm: 8px;
+  --gap-md: 16px;
+  --gap-lg: 24px;
+  --gap-xl: 40px;
   --gap-2xl: 60px;
   --gap-3xl: 100px;
 
   /* Border radii */
-  --radius-sm:  8px;
-  --radius-md:  12px;
-  --radius-lg:  16px;
-  --radius-xl:  20px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-2xl: 24px;
 
   /* Shadows */
-  --shadow-card:  0 20px 50px rgba(0, 0, 0, 0.4);
-  --shadow-blue:  0 0 24px var(--blue-glow);
-  --shadow-deep:  0 32px 80px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.4);
+  --shadow-blue: 0 0 24px var(--blue-glow);
+  --shadow-deep: 0 32px 80px rgba(0, 0, 0, 0.5);
 
   /* Transitions */
-  --transition-fast:   0.15s ease;
-  --transition-base:   0.25s ease;
-  --transition-slow:   0.4s ease;
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
 
   /* Z-index layers */
-  --z-nav:     100;
-  --z-modal:   200;
-  --z-toast:   300;
+  --z-nav: 100;
+  --z-modal: 200;
+  --z-toast: 300;
+
+  /* Layout */
+  --sidebar-width: 220px;
+  --sidebar-collapsed-width: 70px;
 }

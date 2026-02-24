@@ -10,6 +10,7 @@ interface CardProps {
   hoverable?: boolean;
   delay?: number;
   className?: string;
+  style?: React.CSSProperties;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -18,11 +19,13 @@ export default function Card({
   hoverable = true,
   delay = 0,
   className = '',
+  style,
   onClick,
 }: CardProps) {
   return (
     <motion.div
       className={className}
+      style={style}
       onClick={onClick}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}

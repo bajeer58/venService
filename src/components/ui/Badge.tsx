@@ -3,7 +3,7 @@
    ───────────────────────────────────────────── */
 
 interface BadgeProps {
-  color: 'green' | 'amber' | 'red' | 'muted';
+  color: 'green' | 'amber' | 'red' | 'muted' | 'blue' | 'indigo';
   children: React.ReactNode;
 }
 
@@ -12,6 +12,8 @@ const colorClasses: Record<BadgeProps['color'], string> = {
   amber: 'badge badge-amber',
   red: 'badge badge-red',
   muted: 'badge badge-muted',
+  blue: 'badge badge-blue',
+  indigo: 'badge badge-indigo',
 };
 
 export default function Badge({ color, children }: BadgeProps) {

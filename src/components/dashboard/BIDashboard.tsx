@@ -13,36 +13,45 @@ import RevenueDetailChart from './RevenueDetailChart';
 import PeakHoursChart from './PeakHoursChart';
 import OccupancyChart from './OccupancyChart';
 import RouteProfitChart from './RouteProfitChart';
+import ErrorState from '../ui/ErrorState';
 
 export default function BIDashboard() {
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [revenueData, setRevenueData] = useState<DailyRevenue[]>([]);
     const [peakHoursData, setPeakHoursData] = useState<PeakHour[]>([]);
     const [occupancyData, setOccupancyData] = useState<SeatOccupancy[]>([]);
     const [profitabilityData, setProfitabilityData] = useState<RouteProfit[]>([]);
 
-    useEffect(() => {
-        async function loadData() {
-            setIsLoading(true);
-            try {
-                const [r, p, o, pr] = await Promise.all([
-                    fetchDailyRevenue(),
-                    fetchPeakHours(),
-                    fetchSeatOccupancy(),
-                    fetchRouteProfitability(),
-                ]);
-                setRevenueData(r);
-                setPeakHoursData(p);
-                setOccupancyData(o);
-                setProfitabilityData(pr);
-            } catch (error) {
-                console.error('Failed to load BI data:', error);
-            } finally {
-                setIsLoading(false);
-            }
+    async function loadData() {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const [r, p, o, pr] = await Promise.all([
+                fetchDailyRevenue(),
+                fetchPeakHours(),
+                fetchSeatOccupancy(),
+                fetchRouteProfitability(),
+            ]);
+            setRevenueData(r);
+            setPeakHoursData(p);
+            setOccupancyData(o);
+            setProfitabilityData(pr);
+        } catch (err) {
+            console.error('Failed to load BI data:', err);
+            setError('We encountered a problem while fetching the analytics data');
+        } finally {
+            setIsLoading(false);
         }
+    }
+
+    useEffect(() => {
         loadData();
     }, []);
+
+    if (error) {
+        return <div style={{ marginTop: 20 }}><ErrorState message={error} onRetry={loadData} /></div>;
+    }
 
     return (
         <div className="bi-dashboard-container">

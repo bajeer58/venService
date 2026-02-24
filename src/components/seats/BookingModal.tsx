@@ -114,7 +114,7 @@ export default function BookingModal() {
                 />
               </div>
               <div className="modal-field">
-                <label>CNIC (Optional)</label>
+                <label>CNIC (Required)</label>
                 <input
                   type="text"
                   placeholder="42101-XXXXXXX-X"
@@ -138,7 +138,7 @@ export default function BookingModal() {
                 fullWidth
                 style={{ padding: 12 }}
                 onClick={() => setModalStep(2)}
-                disabled={!passengerData.firstName || !passengerData.phone}
+                disabled={!passengerData.firstName || !passengerData.phone || !passengerData.cnic}
               >
                 Continue to Payment →
               </Button>
@@ -160,20 +160,25 @@ export default function BookingModal() {
             <div className="modal-form">
               <div className="modal-field">
                 <label>Payment Method</label>
-                <select
-                  value={paymentData.method}
-                  onChange={(e) => setPaymentData({ ...paymentData, method: e.target.value })}
-                >
+                <div className="payment-methods-grid">
                   {PAYMENT_METHODS.map(({ value, label }) => (
-                    <option key={value} value={value}>{label}</option>
+                    <div
+                      key={value}
+                      className={`payment-method-card ${paymentData.method === value ? 'selected' : ''}`}
+                      onClick={() => setPaymentData({ ...paymentData, method: value })}
+                    >
+                      <div className="pmc-icon">{label.split(' ')[0]}</div>
+                      <div className="pmc-label">{label.split(' ').slice(1).join(' ')}</div>
+                      {paymentData.method === value && <div className="pmc-check">✓</div>}
+                    </div>
                   ))}
-                </select>
+                </div>
               </div>
               <div className="modal-field">
-                <label>Mobile / Account Number</label>
+                <label>{paymentData.method === 'bank' ? 'Account Number' : 'Mobile Number'}</label>
                 <input
                   type="text"
-                  placeholder="0300-1234567"
+                  placeholder={paymentData.method === 'bank' ? 'XXXX-XXXX-XXXX-XXXX' : '0300-1234567'}
                   value={paymentData.accountNumber}
                   onChange={(e) => setPaymentData({ ...paymentData, accountNumber: e.target.value })}
                 />
@@ -237,6 +242,17 @@ export default function BookingModal() {
               <div className="confirm-sub">
                 Ticket {confirmedBooking.id} has been sent to your phone via SMS.
               </div>
+              <div className="confirm-qr-box">
+                <div className="qr-mock">
+                  {/* Mock QR Code using CSS grid */}
+                  <div className="qr-inner">
+                    {[...Array(25)].map((_, i) => (
+                      <div key={i} className="qr-pixel" style={{ opacity: Math.random() > 0.5 ? 1 : 0.1 }} />
+                    ))}
+                  </div>
+                </div>
+                <div className="qr-scan-text">Scan for verification</div>
+              </div>
               <div className="confirm-ticket-box">
                 <div className="confirm-route">
                   {confirmedBooking.route.from} → {confirmedBooking.route.to}
@@ -244,6 +260,7 @@ export default function BookingModal() {
                 <div className="confirm-details">
                   {formatDisplayDate(confirmedBooking.date)} · {confirmedBooking.time} · Seats {confirmedBooking.seats.join(', ')}
                 </div>
+                <div className="confirm-id-label">BOOKING ID</div>
                 <div className="confirm-id">{confirmedBooking.id}</div>
               </div>
               <div style={{ display: 'flex', gap: 10 }}>
