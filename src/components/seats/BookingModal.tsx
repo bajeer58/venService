@@ -6,8 +6,8 @@
    ───────────────────────────────────────────── */
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useBooking } from '../../context/BookingContext';
-import { useToast } from '../../context/ToastContext';
+import { useBooking } from '../../context/BookingContextInstance';
+import { useToast } from '../../context/ToastContextInstance';
 import { MODAL_STEPS, PAYMENT_METHODS } from '../../utils/constants';
 import { formatPKR, formatDisplayDate } from '../../utils/formatters';
 import { createBooking } from '../../services/bookingService';

@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 const navItems = [
   { icon: '📊', label: 'Analytics', to: '/admin' },
+  { icon: '📈', label: 'BI Dashboard', to: '/admin?tab=bi' },
   { icon: '🎫', label: 'Bookings', to: '/admin?tab=bookings' },
   { icon: '🚐', label: 'Routes', to: '/admin?tab=routes' },
   { icon: '👥', label: 'Staff', to: '/admin?tab=staff' },

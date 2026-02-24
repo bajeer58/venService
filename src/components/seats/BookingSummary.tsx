@@ -4,7 +4,7 @@
    ───────────────────────────────────────────── */
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useBooking } from '../../context/BookingContext';
+import { useBooking } from '../../context/BookingContextInstance';
 import { PRICE_PER_SEAT } from '../../utils/constants';
 import { formatPKR, formatDisplayDate } from '../../utils/formatters';
 import Button from '../ui/Button';

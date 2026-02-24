@@ -4,7 +4,7 @@
    ───────────────────────────────────────────── */
 
 import { motion } from 'framer-motion';
-import { useBooking } from '../../context/BookingContext';
+import { useBooking } from '../../context/BookingContextInstance';
 import Seat from './Seat';
 
 export default function SeatMap() {

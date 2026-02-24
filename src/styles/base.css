@@ -104,6 +104,11 @@ section {
 }
 .btn-primary:hover { background: #2f7fff; box-shadow: 0 0 28px var(--blue-glow); }
 
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
 .btn-green {
   background: var(--green);
   color: #000;

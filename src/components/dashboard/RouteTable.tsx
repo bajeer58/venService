@@ -6,7 +6,7 @@
 import { motion } from 'framer-motion';
 import { POPULAR_ROUTES } from '../../utils/constants';
 import { formatPKR } from '../../utils/formatters';
-import { useToast } from '../../context/ToastContext';
+import { useToast } from '../../context/ToastContextInstance';
 
 export default function RouteTable() {
   const { showToast } = useToast();

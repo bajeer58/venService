@@ -6,6 +6,7 @@
 import type {
   SeatStatus, Route, KpiCard, WeeklyBooking, RouteDistribution,
   ManifestRow, ActivityLogEntry,
+  DailyRevenue, PeakHour, SeatOccupancy, RouteProfit,
 } from '../types';
 
 // ── Pricing ─────────────────────────────────────────────────────────────────────
@@ -21,11 +22,11 @@ export const SEATS_PER_ROW = 4;
 
 /** Initial seat statuses for the demo van (5 rows x 4 cols) */
 export const INITIAL_SEAT_STATUSES: SeatStatus[] = [
-  'booked',    'available', 'available', 'available',
-  'available', 'locked',    'available', 'booked',
-  'available', 'available', 'booked',    'available',
+  'booked', 'available', 'available', 'available',
+  'available', 'locked', 'available', 'booked',
+  'available', 'available', 'booked', 'available',
   'available', 'available', 'available', 'available',
-  'booked',    'available', 'available', 'locked',
+  'booked', 'available', 'available', 'locked',
 ];
 
 // ── Cities & Routes ─────────────────────────────────────────────────────────────
@@ -140,4 +141,60 @@ export const HERO_STATS = [
 export const SCHEDULE_OPTIONS = [
   { id: 'ki07-08', time: '08:00 AM', vanId: 'KI-07', seatsAvailable: 7 },
   { id: 'ki09-14', time: '02:00 PM', vanId: 'KI-09', seatsAvailable: 12 },
+];
+// ── BI Analytics Data ───────────────────────────────────────────────────────────
+
+export const DAILY_REVENUE: DailyRevenue[] = [
+  { date: '2026-02-01', revenue: 45000 },
+  { date: '2026-02-02', revenue: 52000 },
+  { date: '2026-02-03', revenue: 48000 },
+  { date: '2026-02-04', revenue: 61000 },
+  { date: '2026-02-05', revenue: 55000 },
+  { date: '2026-02-06', revenue: 72000 },
+  { date: '2026-02-07', revenue: 86000 },
+  { date: '2026-02-08', revenue: 95000 },
+  { date: '2026-02-09', revenue: 68000 },
+  { date: '2026-02-10', revenue: 59000 },
+  { date: '2026-02-11', revenue: 63000 },
+  { date: '2026-02-12', revenue: 77000 },
+  { date: '2026-02-13', revenue: 82000 },
+  { date: '2026-02-14', revenue: 110000 },
+  { date: '2026-02-15', revenue: 125000 },
+  { date: '2026-02-16', revenue: 88000 },
+  { date: '2026-02-17', revenue: 74000 },
+  { date: '2026-02-18', revenue: 79000 },
+  { date: '2026-02-19', revenue: 91000 },
+  { date: '2026-02-20', revenue: 105000 },
+  { date: '2026-02-21', revenue: 118000 },
+  { date: '2026-02-22', revenue: 132000 },
+  { date: '2026-02-23', revenue: 98000 },
+  { date: '2026-02-24', revenue: 102000 },
+];
+
+export const PEAK_HOURS: PeakHour[] = [
+  { hour: '06 AM', count: 45 },
+  { hour: '08 AM', count: 120 },
+  { hour: '10 AM', count: 85 },
+  { hour: '12 PM', count: 60 },
+  { hour: '02 PM', count: 75 },
+  { hour: '04 PM', count: 110 },
+  { hour: '06 PM', count: 145 },
+  { hour: '08 PM', count: 95 },
+  { hour: '10 PM', count: 50 },
+  { hour: '12 AM', count: 25 },
+];
+
+export const SEAT_OCCUPANCY: SeatOccupancy[] = [
+  { category: 'Weekdays', occupancy: 78 },
+  { category: 'Weekends', occupancy: 94 },
+  { category: 'Holidays', occupancy: 98 },
+  { category: 'Overall', occupancy: 84 },
+];
+
+export const ROUTE_PROFITABILITY: RouteProfit[] = [
+  { route: 'KHI-ISB', revenue: 850000, cost: 520000, profit: 330000 },
+  { route: 'LHR-PEW', revenue: 420000, cost: 280000, profit: 140000 },
+  { route: 'ISB-KHI', revenue: 790000, cost: 510000, profit: 280000 },
+  { route: 'MUL-LHR', revenue: 180000, cost: 110000, profit: 70000 },
+  { route: 'QTA-KHI', revenue: 260000, cost: 190000, profit: 70000 },
 ];

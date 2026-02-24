@@ -1,18 +1,6 @@
-/* ─────────────────────────────────────────────
-   Toast notification context.
-   Provides showToast() globally to any component.
-   ───────────────────────────────────────────── */
-
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { useState, useCallback, type ReactNode } from 'react';
 import type { ToastMessage, ToastVariant } from '../types';
-
-interface ToastContextValue {
-  toasts: ToastMessage[];
-  showToast: (message: string, variant?: ToastVariant) => void;
-  dismissToast: (id: string) => void;
-}
-
-const ToastContext = createContext<ToastContextValue | null>(null);
+import { ToastContext } from './ToastContextInstance';
 
 const TOAST_DURATION = 3200;
 
@@ -38,11 +26,4 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
     </ToastContext.Provider>
   );
-}
-
-/** Access toast notifications from any component */
-export function useToast() {
-  const ctx = useContext(ToastContext);
-  if (!ctx) throw new Error('useToast must be used within ToastProvider');
-  return ctx;
 }

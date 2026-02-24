@@ -121,3 +121,40 @@ export interface ScheduleOption {
   vanId: string;
   seatsAvailable: number;
 }
+/** User roles for access control */
+export type UserRole = 'passenger' | 'staff' | 'admin' | 'driver';
+
+/** Logged in user profile */
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  accessToken?: string;
+  photoUrl?: string;
+}
+/** Daily revenue data for area chart */
+export interface DailyRevenue {
+  date: string;
+  revenue: number;
+}
+
+/** Peak hour data for bar chart */
+export interface PeakHour {
+  hour: string;
+  count: number;
+}
+
+/** Seat occupancy data */
+export interface SeatOccupancy {
+  category: string;
+  occupancy: number; // Percentage
+}
+
+/** Route profitability data */
+export interface RouteProfit {
+  route: string;
+  revenue: number;
+  cost: number;
+  profit: number;
+}

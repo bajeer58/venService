@@ -10,6 +10,7 @@ type ButtonVariant = 'primary' | 'ghost' | 'green' | 'danger';
 
 interface ButtonProps {
   variant?: ButtonVariant;
+  size?: 'sm' | 'md';
   children: ReactNode;
   fullWidth?: boolean;
   className?: string;
@@ -28,6 +29,7 @@ const variantClasses: Record<ButtonVariant, string> = {
 
 export default function Button({
   variant = 'primary',
+  size = 'md',
   children,
   fullWidth = false,
   className = '',
@@ -35,9 +37,11 @@ export default function Button({
   onClick,
   style,
 }: ButtonProps) {
+  const sizeClass = size === 'sm' ? 'btn-sm' : '';
+
   return (
     <motion.button
-      className={`${variantClasses[variant]} ${fullWidth ? 'w-full' : ''} ${className}`}
+      className={`${variantClasses[variant]} ${sizeClass} ${fullWidth ? 'w-full' : ''} ${className}`}
       disabled={disabled}
       onClick={onClick}
       style={style}

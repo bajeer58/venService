@@ -16,15 +16,14 @@ import BookingChart from '../components/dashboard/BookingChart';
 import RouteTable from '../components/dashboard/RouteTable';
 import ActivityLog from '../components/dashboard/ActivityLog';
 import StaffPanel from '../components/dashboard/StaffPanel';
+import BIDashboard from '../components/dashboard/BIDashboard';
 import Sidebar from '../components/navigation/Sidebar';
 
-type DashTab = 'admin' | 'staff';
+type DashTab = 'admin' | 'staff' | 'bi';
 
 export default function AdminDashboardPage() {
-  const [searchParams] = useSearchParams();
-  const initialTab = (searchParams.get('tab') as DashTab) || 'admin';
-
-  const [activeTab, setActiveTab] = useState<DashTab>(initialTab);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = (searchParams.get('tab') as DashTab) || 'admin';
   const [isLoading, setIsLoading] = useState(true);
 
   // Dashboard data
@@ -52,11 +51,9 @@ export default function AdminDashboardPage() {
     loadData();
   }, []);
 
-  // Sync tab with URL param
-  useEffect(() => {
-    const tab = searchParams.get('tab') as DashTab;
-    if (tab === 'staff' || tab === 'admin') setActiveTab(tab);
-  }, [searchParams]);
+  const handleTabChange = (tab: DashTab) => {
+    setSearchParams({ tab });
+  };
 
   return (
     <motion.div
@@ -103,13 +100,19 @@ export default function AdminDashboardPage() {
         <div className="dash-tabs" style={{ marginTop: 28, marginBottom: 28 }}>
           <button
             className={`dash-tab ${activeTab === 'admin' ? 'active' : ''}`}
-            onClick={() => setActiveTab('admin')}
+            onClick={() => handleTabChange('admin')}
           >
             📊 Admin Analytics
           </button>
           <button
+            className={`dash-tab ${activeTab === 'bi' ? 'active' : ''}`}
+            onClick={() => handleTabChange('bi')}
+          >
+            📈 Business Intelligence
+          </button>
+          <button
             className={`dash-tab ${activeTab === 'staff' ? 'active' : ''}`}
-            onClick={() => setActiveTab('staff')}
+            onClick={() => handleTabChange('staff')}
           >
             🖥️ Staff Counter
           </button>
@@ -137,6 +140,18 @@ export default function AdminDashboardPage() {
               <div style={{ marginTop: 24 }}>
                 <ActivityLog entries={activityData} isLoading={isLoading} />
               </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'bi' && (
+            <motion.div
+              key="bi"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+            >
+              <BIDashboard />
             </motion.div>
           )}
 

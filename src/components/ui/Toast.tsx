@@ -4,7 +4,7 @@
    ───────────────────────────────────────────── */
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useToast } from '../../context/ToastContext';
+import { useToast } from '../../context/ToastContextInstance';
 import type { ToastVariant } from '../../types';
 
 const icons: Record<ToastVariant, string> = {
