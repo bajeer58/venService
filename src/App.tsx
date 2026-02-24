@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/* ─────────────────────────────────────────────
+   App root — React Router setup with layouts.
+   ───────────────────────────────────────────── */
 
-function App() {
-  const [count, setCount] = useState(0)
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { BookingProvider } from './context/BookingContext';
+import { ToastProvider } from './context/ToastContext';
 
+// Layouts
+import MainLayout from './layouts/MainLayout';
+import DashboardLayout from './layouts/DashboardLayout';
+
+// Pages
+import HomePage from './pages/HomePage';
+import BookingPage from './pages/BookingPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import VerifyPage from './pages/VerifyPage';
+
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <BrowserRouter>
+      <ToastProvider>
+        <BookingProvider>
+          <AnimatePresence mode="wait">
+            <Routes>
+              {/* Public pages with navbar + footer */}
+              <Route element={<MainLayout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/booking" element={<BookingPage />} />
+                <Route path="/verify" element={<VerifyPage />} />
+              </Route>
 
-export default App
+              {/* Dashboard pages with sidebar */}
+              <Route element={<DashboardLayout />}>
+                <Route path="/admin" element={<AdminDashboardPage />} />
+              </Route>
+            </Routes>
+          </AnimatePresence>
+        </BookingProvider>
+      </ToastProvider>
+    </BrowserRouter>
+  );
+}
