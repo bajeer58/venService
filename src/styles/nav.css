@@ -1,0 +1,54 @@
+/* ─────────────────────────────────────────────
+   NAV — fixed top navigation bar
+   ───────────────────────────────────────────── */
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--gap-xl);
+  height: 68px;
+  background: rgba(10, 13, 20, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Logo */
+.logo {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.logo span { color: var(--blue); }
+.logo em {
+  color: var(--green);
+  font-style: normal;
+  font-size: 11px;
+  vertical-align: super;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--transition-base);
+  letter-spacing: 0.2px;
+}
+.nav-links a:hover { color: var(--text); }
+
+/* CTA buttons area */
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}

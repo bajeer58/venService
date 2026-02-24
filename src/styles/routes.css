@@ -1,0 +1,80 @@
+/* ─────────────────────────────────────────────
+   ROUTES — popular route cards grid
+   ───────────────────────────────────────────── */
+
+#routes { padding-top: 80px; }
+
+.routes-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.routes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Card */
+.route-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+.route-card:hover {
+  border-color: rgba(26, 107, 255, 0.4);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card), 0 0 0 1px rgba(26, 107, 255, 0.2);
+}
+
+/* Route image banner */
+.route-img {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  position: relative;
+  overflow: hidden;
+}
+.route-img-karachi   { background: linear-gradient(135deg, #0a1628, #1a3a6b); }
+.route-img-lahore    { background: linear-gradient(135deg, #1a0a2e, #4a1a7a); }
+.route-img-islamabad { background: linear-gradient(135deg, #0a280a, #1a5a1a); }
+.route-img-peshawar  { background: linear-gradient(135deg, #280a0a, #7a1a1a); }
+.route-img-quetta    { background: linear-gradient(135deg, #1a1a0a, #5a5a1a); }
+.route-img-multan    { background: linear-gradient(135deg, #0a1a1a, #1a5a5a); }
+
+/* Card body */
+.route-body { padding: 18px 20px; }
+
+.route-from-to {
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.route-from-to .arrow { color: var(--blue); margin: 0 8px; }
+
+.route-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.route-price {
+  font-size: 20px;
+  font-weight: 800;
+  font-family: var(--font-head);
+}
+.route-price span {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+  font-family: var(--font-body);
+}
+.route-info { font-size: 12px; color: var(--muted); }

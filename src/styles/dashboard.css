@@ -1,0 +1,288 @@
+/* ─────────────────────────────────────────────
+   DASHBOARD — admin analytics + staff counter
+   ───────────────────────────────────────────── */
+
+#dashboard { padding-top: 80px; }
+
+/* ── Tab switcher ── */
+.dash-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 32px 0 24px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  border: 1px solid var(--border);
+  width: fit-content;
+}
+
+.dash-tab {
+  padding: 9px 20px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-body);
+}
+.dash-tab.active { background: var(--blue); color: #fff; }
+
+/* ── Panel visibility ── */
+.dash-panel         { display: none; }
+.dash-panel.active  { display: block; }
+
+/* ── Admin KPI Cards ── */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-md);
+  margin-bottom: var(--gap-lg);
+}
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  transition: all var(--transition-base);
+}
+.kpi-card:hover { border-color: rgba(26, 107, 255, 0.3); }
+
+.kpi-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.kpi-value {
+  font-family: var(--font-head);
+  font-size: 30px;
+  font-weight: 800;
+  margin: 6px 0 4px;
+}
+.kpi-change { font-size: 12px; }
+.kpi-change.up   { color: var(--green); }
+.kpi-change.down { color: var(--red); }
+
+/* KPI value color variants */
+.kv-blue  { color: var(--blue); }
+.kv-green { color: var(--green); }
+.kv-amber { color: var(--amber); }
+.kv-text  { color: var(--text); }
+
+/* ── Charts row ── */
+.dash-charts {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.chart-title {
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* ── Bar chart ── */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 100px;
+}
+.bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+.bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--blue) 0%, rgba(26, 107, 255, 0.4) 100%);
+  transition: height var(--transition-slow);
+  min-height: 4px;
+}
+.bar-lbl { font-size: 10px; color: var(--muted); }
+
+/* ── Donut chart ── */
+.donut-chart {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--blue)  0%   45%,
+    var(--green) 45%  72%,
+    var(--amber) 72%  88%,
+    var(--red)   88%  100%
+  );
+  position: relative;
+  margin: 0 auto;
+}
+.donut-hole {
+  position: absolute;
+  inset: 20px;
+  background: var(--surface);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 800;
+}
+.donut-legend { margin-top: 16px; }
+.dl-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 4px 0;
+  color: var(--muted);
+}
+.dl-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* ── Staff panel ── */
+.staff-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.panel-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+}
+.panel-card + .panel-card-wide { margin-top: 20px; }
+
+.panel-title {
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+/* Quick booking form */
+.form-stack { display: flex; flex-direction: column; gap: 12px; }
+.mini-field { display: flex; flex-direction: column; gap: 6px; }
+.mini-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.mini-field input,
+.mini-field select {
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  outline: none;
+  transition: border-color var(--transition-base);
+}
+.mini-field input:focus,
+.mini-field select:focus { border-color: var(--blue); }
+
+/* Thermal ticket preview */
+.ticket-preview {
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: #000;
+  text-align: center;
+  border: 2px dashed #ddd;
+}
+.tp-title {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.tp-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.tp-qr {
+  width: 80px;
+  height: 80px;
+  background: #000;
+  border-radius: 4px;
+  margin: 12px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 10px;
+}
+.tp-footer {
+  margin-top: 10px;
+  border-top: 1px dashed #ddd;
+  padding-top: 8px;
+  font-size: 10px;
+  color: #666;
+}
+
+/* Manifest table */
+.manifest-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.manifest-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  overflow-x: auto;
+}
+.manifest-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.manifest-table td {
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+}
+.manifest-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 5px;
+}

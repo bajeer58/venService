@@ -1,0 +1,78 @@
+/* ─────────────────────────────────────────────
+   UTILS — animations, toast, reveal, responsive
+   ───────────────────────────────────────────── */
+
+/* ── Keyframes ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scroll-reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Toast notification ── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: var(--z-toast);
+  background: var(--surface2);
+  border: 1px solid rgba(0, 214, 143, 0.3);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast-icon { font-size: 18px; }
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+   ───────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+
+  .search-row { grid-template-columns: 1fr 1fr; }
+  .routes-grid { grid-template-columns: 1fr 1fr; }
+  .seat-demo { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .admin-grid { grid-template-columns: 1fr 1fr; }
+  .dash-charts { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+
+  section { padding: 60px 20px; }
+}
+
+@media (max-width: 600px) {
+  .search-row { grid-template-columns: 1fr; }
+  .routes-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .staff-layout { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+
+  .cta-title { font-size: 28px; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+
+  .stats-row { gap: 24px; flex-wrap: wrap; justify-content: center; }
+  .verify-demo { flex-direction: column; align-items: center; }
+}

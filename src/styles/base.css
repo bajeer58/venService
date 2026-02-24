@@ -1,0 +1,125 @@
+/* ─────────────────────────────────────────────
+   BASE — reset, body, scrollbar, typography
+   ───────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: var(--blue); border-radius: 2px; }
+
+/* Shared headings */
+h1 {
+  font-family: var(--font-head);
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2px;
+}
+
+h2 {
+  font-family: var(--font-head);
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+h2 .hi { color: var(--blue); }
+
+/* Shared section structure */
+section {
+  padding: var(--gap-3xl) var(--gap-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+
+.section-desc {
+  margin-top: 14px;
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 500px;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Shared buttons */
+.btn {
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-base);
+  font-family: var(--font-body);
+  letter-spacing: 0.2px;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: var(--shadow-blue);
+}
+.btn-primary:hover { background: #2f7fff; box-shadow: 0 0 28px var(--blue-glow); }
+
+.btn-green {
+  background: var(--green);
+  color: #000;
+  font-weight: 700;
+}
+.btn-green:hover { background: #00f0a0; }
+
+/* Shared badges */
+.badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.badge-green  { background: rgba(0, 214, 143, 0.12); color: var(--green); }
+.badge-amber  { background: rgba(245, 166, 35, 0.12); color: var(--amber); }
+.badge-red    { background: rgba(255, 71, 87, 0.12);  color: var(--red); }

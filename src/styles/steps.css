@@ -1,0 +1,67 @@
+/* ─────────────────────────────────────────────
+   STEPS — "How It Works" 4-step section
+   ───────────────────────────────────────────── */
+
+#how { padding-top: 80px; }
+
+#how > div:first-child { text-align: center; }
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-lg);
+  margin-top: 48px;
+}
+
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  position: relative;
+  transition: all var(--transition-base);
+}
+.step-card:hover {
+  border-color: rgba(26, 107, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+.step-num {
+  font-family: var(--font-head);
+  font-size: 48px;
+  font-weight: 800;
+  color: rgba(26, 107, 255, 0.12);
+  letter-spacing: -2px;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.step-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.step-title {
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Arrow connector between steps */
+.connector {
+  position: absolute;
+  top: 50%;
+  right: -16px;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+  z-index: 1;
+}

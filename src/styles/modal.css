@@ -1,0 +1,185 @@
+/* ─────────────────────────────────────────────
+   MODAL — multi-step booking dialog
+   ───────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  padding: var(--gap-xl);
+  width: 90%;
+  max-width: 520px;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform var(--transition-base);
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+
+.modal-title {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.modal-sub {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+/* Step progress dots */
+.step-indicator {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.step-dot {
+  height: 3px;
+  flex: 1;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background var(--transition-slow);
+}
+.step-dot.done   { background: var(--green); }
+.step-dot.active { background: var(--blue); }
+
+/* Form fields inside modal */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.modal-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 7px;
+}
+.modal-field input,
+.modal-field select {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-base);
+}
+.modal-field input:focus,
+.modal-field select:focus { border-color: var(--blue); }
+
+.modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* Payment summary box */
+.payment-summary-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 8px;
+}
+.payment-summary-box .psb-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.psb-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.psb-row.sub { color: var(--muted); }
+.psb-row.total-row {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+.psb-row.total-row span:last-child { color: var(--green); }
+
+/* Confirmation step */
+.confirm-screen { text-align: center; }
+.confirm-emoji  { font-size: 64px; margin-bottom: 16px; }
+.confirm-title  {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--green);
+}
+.confirm-sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+.confirm-ticket-box {
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.confirm-route {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.confirm-details { font-size: 13px; color: var(--muted); }
+.confirm-id {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  font-family: monospace;
+  font-size: 24px;
+  letter-spacing: 4px;
+  font-weight: 700;
+}
+
+/* Close button */
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  transition: color var(--transition-base);
+  line-height: 1;
+}
+.close-modal:hover { color: var(--text); }
