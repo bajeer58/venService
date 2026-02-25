@@ -148,7 +148,7 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <Button variant="ghost" size="sm" onClick={() => navigate('/admin')}>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
                 Login
               </Button>
               <Button variant="primary" size="sm" onClick={openModal}>
@@ -221,7 +221,7 @@ export default function Navbar() {
             </Button>
           ) : (
             <>
-              <Button variant="ghost" fullWidth onClick={() => { navigate('/admin'); setMenuOpen(false); }}>
+              <Button variant="ghost" fullWidth onClick={() => { navigate('/login'); setMenuOpen(false); }}>
                 Login
               </Button>
               <Button variant="primary" fullWidth onClick={() => { openModal(); setMenuOpen(false); }}>

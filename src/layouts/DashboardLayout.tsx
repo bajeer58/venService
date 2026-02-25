@@ -15,7 +15,7 @@ export default function DashboardLayout() {
 
   // Extra safety check (though ProtectedRoute should handle this)
   if (!user || !hasRole(['admin', 'staff', 'driver'])) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   // Determine if the user is a driver

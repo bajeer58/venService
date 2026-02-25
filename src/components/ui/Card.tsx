@@ -1,22 +1,32 @@
-/* ─────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────────────
    Card.tsx — venService v2.0
    Variants: elevated, outlined, glass
+   Slot pattern: header / body / footer
    Animation is caller's responsibility.
-   ───────────────────────────────────────────── */
+   ───────────────────────────────────────────────────────────── */
 
 import React from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 
+// ── Types ──────────────────────────────────────────────────────
+
 export type CardVariant = 'elevated' | 'outlined' | 'glass';
 
 interface CardProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   variant?: CardVariant;
   hoverable?: boolean;
-  /** @deprecated pass a className or style instead */
+  /** Card header slot — rendered above body with a bottom border */
+  header?: React.ReactNode;
+  /** Card footer slot — rendered below body with a top border */
+  footer?: React.ReactNode;
+  /** @deprecated pass className or style directly */
   delay?: number;
   className?: string;
+  padding?: string | number;
 }
+
+// ── Variant styles ─────────────────────────────────────────────
 
 const VARIANT_STYLES: Record<CardVariant, React.CSSProperties> = {
   elevated: {
@@ -38,11 +48,59 @@ const VARIANT_STYLES: Record<CardVariant, React.CSSProperties> = {
   },
 };
 
-export default function Card({
+// ── Slot sub-components ────────────────────────────────────────
+
+function CardHeader({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{
+        padding: 'var(--space-4) var(--space-5)',
+        borderBottom: '1px solid var(--border)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 'var(--space-3)',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function CardBody({ children, padding }: { children: React.ReactNode; padding?: string | number }) {
+  return (
+    <div style={{ padding: padding ?? 'var(--space-5)' }}>
+      {children}
+    </div>
+  );
+}
+
+function CardFooter({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{
+        padding: 'var(--space-4) var(--space-5)',
+        borderTop: '1px solid var(--border)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        gap: 'var(--space-3)',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ── Main Card component ────────────────────────────────────────
+
+function Card({
   children,
   variant = 'elevated',
   hoverable = true,
-  delay,       // consumed so it's not spread to DOM
+  header,
+  footer,
+  delay,        // consumed so it won't be spread to DOM
+  padding,
   className = '',
   style,
   onClick,
@@ -66,10 +124,35 @@ export default function Card({
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
-      onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(e as unknown as React.MouseEvent<HTMLDivElement>); } } : undefined}
+      onKeyDown={
+        onClick
+          ? (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onClick(e as unknown as React.MouseEvent<HTMLDivElement>);
+            }
+          }
+          : undefined
+      }
       {...rest}
     >
-      {children}
+      {header && <CardHeader>{header}</CardHeader>}
+
+      {/* If header/footer slots used, wrap children in CardBody */}
+      {(header || footer) ? (
+        <CardBody padding={padding}>{children}</CardBody>
+      ) : (
+        children
+      )}
+
+      {footer && <CardFooter>{footer}</CardFooter>}
     </motion.div>
   );
 }
+
+// Expose sub-components as named exports for direct use
+Card.Header = CardHeader;
+Card.Body = CardBody;
+Card.Footer = CardFooter;
+
+export default Card;

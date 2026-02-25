@@ -362,3 +362,100 @@ section {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ── Input primitive ── */
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.input-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface2);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-dim);
+}
+
+.input-wrapper--error {
+  border-color: var(--color-danger);
+}
+
+.input-wrapper--error:focus-within {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.input-wrapper--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input-control {
+  flex: 1;
+  padding: 10px var(--space-3);
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  width: 100%;
+}
+
+.input-control::placeholder {
+  color: var(--muted);
+}
+
+.input-control.has-left-icon {
+  padding-left: var(--space-2);
+}
+
+.input-control.has-right-icon {
+  padding-right: var(--space-2);
+}
+
+.input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.input-icon--left {
+  padding-left: var(--space-3);
+}
+
+.input-icon--right {
+  padding-right: var(--space-3);
+}
+
+.input-error {
+  font-size: var(--text-xs);
+  color: var(--color-danger);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.input-hint {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}

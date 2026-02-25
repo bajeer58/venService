@@ -16,6 +16,7 @@ import AnimatedCounter from '../components/ui/AnimatedCounter';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
+import ServicesSection from '../features/services/ServicesSection';
 
 // ── Animation helpers ─────────────────────────────────────────
 
@@ -259,6 +260,12 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* ══════════════════════════════════════════════════
+          SERVICES FILTER
+          ══════════════════════════════════════════════════ */}
+
+      <ServicesSection />
 
       <div className="divider" aria-hidden="true" />
 

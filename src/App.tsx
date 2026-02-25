@@ -6,6 +6,7 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { BookingProvider } from './context/BookingContext';
@@ -19,7 +20,8 @@ import DashboardLayout from './layouts/DashboardLayout';
 
 // ── Lazy-load ALL pages — zero initial bundle cost ───────────
 const HomePage = lazy(() => import('./pages/HomePage'));
-const BookingPage = lazy(() => import('./pages/BookingPage'));
+const BookingFlowPage = lazy(() => import('./features/booking/BookingFlowPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
 const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage'));
 const DriverDashboardPage = lazy(() => import('./pages/DriverDashboardPage'));
 const VerifyPage = lazy(() => import('./pages/VerifyPage'));
@@ -57,7 +59,8 @@ export default function App() {
                   {/* ── Public routes ──────────────────── */}
                   <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/booking" element={<BookingPage />} />
+                    <Route path="/booking" element={<BookingFlowPage />} />
+                    <Route path="/login" element={<LoginPage />} />
                     <Route path="/verify" element={<VerifyPage />} />
                   </Route>
 
@@ -87,6 +90,29 @@ export default function App() {
 
             {/* Dev-only RBAC toolbar — no-op in production */}
             <DevToolbar />
+
+            {/* react-hot-toast — global notification layer */}
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 4000,
+                style: {
+                  background: 'var(--surface3)',
+                  color: 'var(--text)',
+                  border: '1px solid var(--border-strong)',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '0.875rem',
+                  fontFamily: 'var(--font-body)',
+                  boxShadow: 'var(--shadow-lg)',
+                },
+                success: {
+                  iconTheme: { primary: 'var(--color-success)', secondary: 'var(--bg)' },
+                },
+                error: {
+                  iconTheme: { primary: 'var(--color-danger)', secondary: 'var(--bg)' },
+                },
+              }}
+            />
           </BookingProvider>
         </ToastProvider>
       </AuthProvider>

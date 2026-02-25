@@ -50,23 +50,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const login = useCallback(async (email: string, role: UserRole): Promise<void> => {
         setIsLoading(true);
+        try {
+            // Simulate network latency (replace with real API call)
+            await new Promise(resolve => setTimeout(resolve, 600));
 
-        // Simulate network latency (replace with real API call)
-        await new Promise(resolve => setTimeout(resolve, 400));
+            const mockUser: User = {
+                id: crypto.randomUUID(),
+                name: email.split('@')[0]
+                    .replace(/[._-]/g, ' ')
+                    .replace(/\b\w/g, c => c.toUpperCase()),
+                email,
+                role,
+                accessToken: `mock-jwt-${role}-${Date.now()}`,
+            };
 
-        const mockUser: User = {
-            id: crypto.randomUUID(),
-            name: email.split('@')[0]
-                .replace(/[._-]/g, ' ')
-                .replace(/\b\w/g, c => c.toUpperCase()),
-            email,
-            role,
-            accessToken: `mock-jwt-${role}-${Date.now()}`,
-        };
-
-        setUser(mockUser);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(mockUser));
-        setIsLoading(false);
+            setUser(mockUser);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(mockUser));
+        } finally {
+            setIsLoading(false);
+        }
     }, []);
 
     const logout = useCallback(() => {
