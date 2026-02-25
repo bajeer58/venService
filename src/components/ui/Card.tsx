@@ -1,41 +1,73 @@
 /* ─────────────────────────────────────────────
-   Reusable Card component with hover elevation.
+   Card.tsx — venService v2.0
+   Variants: elevated, outlined, glass
+   Animation is caller's responsibility.
    ───────────────────────────────────────────── */
 
-import { motion } from 'framer-motion';
-import type { ReactNode, MouseEventHandler } from 'react';
+import React from 'react';
+import { motion, type HTMLMotionProps } from 'framer-motion';
 
-interface CardProps {
-  children: ReactNode;
+export type CardVariant = 'elevated' | 'outlined' | 'glass';
+
+interface CardProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
+  children: React.ReactNode;
+  variant?: CardVariant;
   hoverable?: boolean;
+  /** @deprecated pass a className or style instead */
   delay?: number;
   className?: string;
-  style?: React.CSSProperties;
-  onClick?: MouseEventHandler<HTMLDivElement>;
 }
+
+const VARIANT_STYLES: Record<CardVariant, React.CSSProperties> = {
+  elevated: {
+    background: 'var(--surface2)',
+    border: '1px solid var(--border)',
+    boxShadow: 'var(--shadow-card)',
+  },
+  outlined: {
+    background: 'transparent',
+    border: '1px solid var(--border)',
+    boxShadow: 'none',
+  },
+  glass: {
+    background: 'rgba(255,255,255,0.03)',
+    border: '1px solid rgba(255,255,255,0.08)',
+    backdropFilter: 'blur(12px)',
+    WebkitBackdropFilter: 'blur(12px)',
+    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
+  },
+};
 
 export default function Card({
   children,
+  variant = 'elevated',
   hoverable = true,
-  delay = 0,
+  delay,       // consumed so it's not spread to DOM
   className = '',
   style,
   onClick,
+  ...rest
 }: CardProps) {
+  const baseStyle = {
+    borderRadius: 'var(--radius-lg)',
+    overflow: 'hidden',
+    position: 'relative',
+    cursor: onClick ? 'pointer' : 'default',
+    ...VARIANT_STYLES[variant],
+    ...style,
+  } as React.CSSProperties;
+
   return (
     <motion.div
       className={className}
-      style={style}
+      style={baseStyle}
       onClick={onClick}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
-      whileHover={hoverable ? {
-        y: -6,
-        boxShadow: '0 24px 60px rgba(0, 0, 0, 0.45)',
-        transition: { duration: 0.25 },
-      } : {}}
+      whileHover={hoverable && onClick ? { y: -3, boxShadow: 'var(--shadow-lg)' } : undefined}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(e as unknown as React.MouseEvent<HTMLDivElement>); } } : undefined}
+      {...rest}
     >
       {children}
     </motion.div>

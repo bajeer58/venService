@@ -70,7 +70,7 @@ export default function DriverDashboardPage() {
             {/* Passenger Manifest */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
                 <h3 style={{ margin: 0 }}>Passenger Manifest</h3>
-                <Badge color="blue">Today: {tripDetails.date}</Badge>
+                <Badge variant="info">Today: {tripDetails.date}</Badge>
             </div>
 
             <div style={{ background: 'var(--surface2)', borderRadius: 16, border: '1px solid var(--border)', overflow: 'hidden' }}>

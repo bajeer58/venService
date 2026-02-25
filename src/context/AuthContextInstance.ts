@@ -1,13 +1,9 @@
-import { createContext } from 'react';
-import type { User, UserRole } from '../types';
+/* ═══════════════════════════════════════════════════════════
+   AuthContextInstance.ts — SHIM for backwards compatibility
+   Real implementation is now in AuthContext.tsx.
+   This file can be deleted once all imports are updated.
+   ═══════════════════════════════════════════════════════════ */
 
-export interface AuthContextType {
-    user: User | null;
-    isAuthenticated: boolean;
-    isLoading: boolean;
-    login: (email: string, role: UserRole) => Promise<void>;
-    logout: () => void;
-    hasRole: (roles: UserRole[]) => boolean;
-}
-
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Re-export everything from the consolidated file
+export { useAuth } from './AuthContext';
+export type { } from './AuthContext';

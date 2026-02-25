@@ -1,25 +1,50 @@
-/* ─────────────────────────────────────────────
-   App root — React Router setup with layouts.
-   ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   App.tsx — venService v2.0
+   Lazy-loaded routes. One concern: routing only.
+   ═══════════════════════════════════════════════════════════ */
 
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { BookingProvider } from './context/BookingContext';
-import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
+import { BookingProvider } from './context/BookingContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import Spinner from './components/ui/Spinner';
+import DevToolbar from './dev/DevToolbar';
 
 // Layouts
 import MainLayout from './layouts/MainLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 
-// Pages
-import HomePage from './pages/HomePage';
-import BookingPage from './pages/BookingPage';
-import AdminDashboardPage from './pages/AdminDashboardPage';
-import VerifyPage from './pages/VerifyPage';
-import DriverDashboardPage from './pages/DriverDashboardPage'; // <-- Added Import
+// ── Lazy-load ALL pages — zero initial bundle cost ───────────
+const HomePage = lazy(() => import('./pages/HomePage'));
+const BookingPage = lazy(() => import('./pages/BookingPage'));
+const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage'));
+const DriverDashboardPage = lazy(() => import('./pages/DriverDashboardPage'));
+const VerifyPage = lazy(() => import('./pages/VerifyPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
+// ── Page-level loading fallback ───────────────────────────────
+function PageLoader() {
+  return (
+    <div
+      role="status"
+      aria-label="Loading page"
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'var(--bg)',
+      }}
+    >
+      <Spinner size={32} label="Loading page…" />
+    </div>
+  );
+}
+
+// ── App ───────────────────────────────────────────────────────
 export default function App() {
   return (
     <BrowserRouter>
@@ -27,37 +52,41 @@ export default function App() {
         <ToastProvider>
           <BookingProvider>
             <AnimatePresence mode="wait">
-              <Routes>
-                {/* Public pages with navbar + footer */}
-                <Route element={<MainLayout />}>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/booking" element={<BookingPage />} />
-                  <Route path="/verify" element={<VerifyPage />} />
-                </Route>
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  {/* ── Public routes ──────────────────── */}
+                  <Route element={<MainLayout />}>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/booking" element={<BookingPage />} />
+                    <Route path="/verify" element={<VerifyPage />} />
+                  </Route>
 
-                {/* Dashboard pages - Protected for Staff and Admin */}
-                <Route
-                  element={
+                  {/* ── Admin / Staff protected ────────── */}
+                  <Route element={
                     <ProtectedRoute allowedRoles={['admin', 'staff']}>
                       <DashboardLayout />
                     </ProtectedRoute>
-                  }
-                >
-                  <Route path="/admin" element={<AdminDashboardPage />} />
-                </Route>
+                  }>
+                    <Route path="/admin" element={<AdminDashboardPage />} />
+                  </Route>
 
-                {/* Driver protected route */}
-                <Route
-                  element={
+                  {/* ── Driver protected ───────────────── */}
+                  <Route element={
                     <ProtectedRoute allowedRoles={['driver']}>
                       <DashboardLayout />
                     </ProtectedRoute>
-                  }
-                >
-                  <Route path="/driver" element={<DriverDashboardPage />} />
-                </Route>
-              </Routes>
+                  }>
+                    <Route path="/driver" element={<DriverDashboardPage />} />
+                  </Route>
+
+                  {/* ── 404 ────────────────────────────── */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
             </AnimatePresence>
+
+            {/* Dev-only RBAC toolbar — no-op in production */}
+            <DevToolbar />
           </BookingProvider>
         </ToastProvider>
       </AuthProvider>

@@ -1,10 +1,7 @@
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContextInstance';
+/* ═══════════════════════════════════════════════════════════
+   useAuth.ts — SHIM for backwards compatibility
+   Real implementation is in AuthContext.tsx.
+   ═══════════════════════════════════════════════════════════ */
 
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
-};
+// Re-export the hook from the consolidated context file
+export { useAuth } from '../context/AuthContext';

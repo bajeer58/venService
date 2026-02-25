@@ -1,11 +1,11 @@
-/* ─────────────────────────────────────────────
-   Global stylesheet — Tailwind + design system.
-   This is the single CSS entry point for the app.
-   ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   globals.css — venService v2.0
+   Import order: variables → base reset → component styles
+   ═══════════════════════════════════════════════════════════ */
 
 @import "tailwindcss";
 
-/* ── Existing design system imports ── */
+/* ── Design System ── */
 @import "./variables.css";
 @import "./base.css";
 @import "./nav.css";
@@ -18,136 +18,19 @@
 @import "./modal.css";
 @import "./utils.css";
 
-/* ── Tailwind theme extensions (maps to existing design tokens) ── */
+/* ── Tailwind theme bridge ── */
 @theme {
   --color-brand: #1a6bff;
   --color-brand-glow: rgba(26, 107, 255, 0.35);
   --color-brand-dim: rgba(26, 107, 255, 0.12);
-  --color-success: #00d68f;
-  --color-warning: #f5a623;
-  --color-danger: #ff4757;
-  --color-dark: #0a0d14;
-  --color-surface: #111520;
-  --color-surface-2: #161c2d;
-  --color-text-primary: #e8eaf2;
-  --color-text-muted: #6b7394;
-  --font-heading: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-}
-
-/* ── Admin sidebar styles ── */
-.admin-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: var(--sidebar-width);
-  height: 100vh;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-  z-index: 90;
-  transition: width var(--transition-base);
-}
-
-.sidebar-brand {
-  padding: 16px 20px 24px;
-  border-bottom: 1px solid var(--border);
-}
-
-.sidebar-nav {
-  flex: 1;
-  padding: 16px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 14px;
-  transition: var(--transition-fast);
-  cursor: pointer;
-}
-
-.sidebar-item:hover,
-.sidebar-item.active {
-  background: var(--surface2);
-  color: var(--text);
-}
-
-.sidebar-item.active {
-  border-left: 3px solid var(--blue);
-  padding-left: 11px;
-}
-
-.sidebar-icon {
-  font-size: 18px;
-  width: 24px;
-  text-align: center;
-}
-
-.sidebar-footer {
-  padding: 12px;
-  border-top: 1px solid var(--border);
-}
-
-/* ── Dashboard responsive fixes ── */
-@media (max-width: 900px) {
-  :root {
-    --sidebar-offset: var(--sidebar-collapsed-width);
-  }
-
-  .admin-sidebar {
-    width: var(--sidebar-collapsed-width);
-  }
-
-  .sidebar-label,
-  .sidebar-brand .logo span {
-    display: none;
-  }
-
-  .sidebar-nav {
-    padding: 16px 6px;
-  }
-
-  .sidebar-item {
-    justify-content: center;
-    padding: 10px;
-  }
-}
-
-@media (max-width: 600px) {
-  :root {
-    --sidebar-offset: 0px;
-  }
-
-  .admin-sidebar {
-    transform: translateX(-100%);
-  }
-
-  .admin-sidebar.mobile-open {
-    transform: translateX(0);
-    width: var(--sidebar-width);
-  }
-}
-
-/* ── Smooth page transitions ── */
-main {
-  min-height: 100vh;
-}
-
-/* ── Toast positioning override for React version ── */
-.toast.show {
-  position: relative;
-  transform: none;
-  bottom: auto;
-  right: auto;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-dark: #06080f;
+  --color-surface: #0f1221;
+  --color-surface-2: #141929;
+  --color-text: #e8eaf2;
+  --color-muted: #6b7394;
+  --font-heading: 'Syne', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
 }

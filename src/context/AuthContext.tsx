@@ -1,49 +1,95 @@
-import React, { useState } from 'react';
-import type { ReactNode } from 'react';
+/* ═══════════════════════════════════════════════════════════
+   AuthContext.tsx — venService v2.0
+   Context + hook + provider — all in one file.
+   No more AuthContextInstance.ts split anti-pattern.
+   ═══════════════════════════════════════════════════════════ */
+
+import React, { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
 import type { User, UserRole } from '../types';
-import { AuthContext } from './AuthContextInstance';
+
+// ── Interface ─────────────────────────────────────────────────
+
+interface AuthContextValue {
+    user: User | null;
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    login: (email: string, role: UserRole) => Promise<void>;
+    logout: () => void;
+    hasRole: (roles: UserRole[]) => boolean;
+}
+
+// ── Context ───────────────────────────────────────────────────
+
+const AuthContext = createContext<AuthContextValue | null>(null);
+AuthContext.displayName = 'AuthContext';
+
+// ── Hook ──────────────────────────────────────────────────────
+
+export function useAuth(): AuthContextValue {
+    const ctx = useContext(AuthContext);
+    if (!ctx) throw new Error('useAuth must be used within <AuthProvider>');
+    return ctx;
+}
+
+// ── Provider ──────────────────────────────────────────────────
+
+const STORAGE_KEY = 'venservice_user';
+
+function loadPersistedUser(): User | null {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? (JSON.parse(raw) as User) : null;
+    } catch {
+        return null;
+    }
+}
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(() => {
-        const savedUser = localStorage.getItem('venservice_user');
-        try {
-            return savedUser ? JSON.parse(savedUser) : null;
-        } catch {
-            return null;
-        }
-    });
+    const [user, setUser] = useState<User | null>(loadPersistedUser);
     const [isLoading, setIsLoading] = useState(false);
 
-    const login = async (email: string, role: UserRole) => {
+    const login = useCallback(async (email: string, role: UserRole): Promise<void> => {
         setIsLoading(true);
-        // Simulate API call and JWT generation
+
+        // Simulate network latency (replace with real API call)
+        await new Promise(resolve => setTimeout(resolve, 400));
+
         const mockUser: User = {
-            id: Math.random().toString(36).substr(2, 9),
-            name: email.split('@')[0],
+            id: crypto.randomUUID(),
+            name: email.split('@')[0]
+                .replace(/[._-]/g, ' ')
+                .replace(/\b\w/g, c => c.toUpperCase()),
             email,
             role,
-            accessToken: 'mock-jwt-token-' + Date.now(),
+            accessToken: `mock-jwt-${role}-${Date.now()}`,
         };
 
         setUser(mockUser);
-        localStorage.setItem('venservice_user', JSON.stringify(mockUser));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(mockUser));
         setIsLoading(false);
-    };
+    }, []);
 
-    const logout = () => {
+    const logout = useCallback(() => {
         setUser(null);
-        localStorage.removeItem('venservice_user');
-    };
+        localStorage.removeItem(STORAGE_KEY);
+    }, []);
 
-    const hasRole = (roles: UserRole[]) => {
+    const hasRole = useCallback((roles: UserRole[]): boolean => {
         if (!user) return false;
         return roles.includes(user.role);
+    }, [user]);
+
+    const value: AuthContextValue = {
+        user,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        logout,
+        hasRole,
     };
 
-    const isAuthenticated = !!user;
-
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, isLoading, login, logout, hasRole }}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );

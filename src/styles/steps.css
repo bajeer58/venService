@@ -1,67 +1,152 @@
-/* ─────────────────────────────────────────────
-   STEPS — "How It Works" 4-step section
-   ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   steps.css — venService v2.0
+   "How it works" — connected timeline style, Busbud-inspired.
+   ═══════════════════════════════════════════════════════════ */
 
-#how { padding-top: 80px; }
+#how {
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+  position: relative;
+}
 
-#how > div:first-child { text-align: center; }
+#how>div:first-child {
+  text-align: center;
+}
 
+/* ── Steps grid ── */
 .steps-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--gap-lg);
-  margin-top: 48px;
-}
-
-.step-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 28px 24px;
+  gap: var(--space-6);
+  margin-top: var(--space-12);
   position: relative;
-  transition: all var(--transition-base);
-}
-.step-card:hover {
-  border-color: rgba(26, 107, 255, 0.3);
-  transform: translateY(-3px);
 }
 
+/* Connecting line passing through all cards */
+.steps-grid::before {
+  content: '';
+  position: absolute;
+  top: 52px;
+  left: calc(12.5% + 0px);
+  right: calc(12.5% + 0px);
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent,
+      var(--color-primary-dim) 15%,
+      rgba(26, 107, 255, 0.35) 50%,
+      var(--color-primary-dim) 85%,
+      transparent);
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps-grid::before {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Step card ── */
+.step-card {
+  background: var(--surface2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-xl) !important;
+  padding: var(--space-6) var(--space-5) !important;
+  position: relative;
+  text-align: center;
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base),
+    box-shadow var(--transition-base) !important;
+  z-index: 1;
+}
+
+.step-card:hover {
+  border-color: rgba(26, 107, 255, 0.4) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* ── Step dot / icon container ── */
+.step-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-primary-dim);
+  border: 2px solid rgba(26, 107, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin: 0 auto var(--space-4);
+  position: relative;
+  z-index: 1;
+  transition: all var(--transition-base);
+  box-shadow: 0 0 0 6px var(--bg);
+  /* white ring to cover the connecting line */
+}
+
+.step-card:hover .step-icon-wrap {
+  background: rgba(26, 107, 255, 0.18);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 6px var(--bg), 0 0 20px var(--color-primary-glow);
+}
+
+/* Legacy: .step-num (keep for backwards compat) */
 .step-num {
-  font-family: var(--font-head);
-  font-size: 48px;
-  font-weight: 800;
-  color: rgba(26, 107, 255, 0.12);
-  letter-spacing: -2px;
-  margin-bottom: 12px;
-  line-height: 1;
+  display: none;
+  /* replaced by number inside icon badge */
 }
 
 .step-icon {
-  font-size: 28px;
-  margin-bottom: 12px;
+  font-size: 26px;
+  margin-bottom: var(--space-4);
   display: block;
+  text-align: center;
+}
+
+/* Step number callout */
+.step-number {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 22px;
+  height: 22px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
 }
 
 .step-title {
   font-family: var(--font-head);
-  font-size: 17px;
+  font-size: var(--text-lg);
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-2);
+  color: var(--text);
 }
 
 .step-desc {
-  font-size: 13.5px;
+  font-size: var(--text-sm);
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-/* Arrow connector between steps */
+/* Legacy connector (hidden, replaced by ::before line) */
 .connector {
-  position: absolute;
-  top: 50%;
-  right: -16px;
-  width: 32px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--blue), transparent);
-  z-index: 1;
+  display: none;
 }

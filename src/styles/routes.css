@@ -1,80 +1,204 @@
-/* ─────────────────────────────────────────────
-   ROUTES — popular route cards grid
-   ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   routes.css — venService v2.0
+   Flixbus-inspired route cards: tall image + overlay gradient.
+   ═══════════════════════════════════════════════════════════ */
 
-#routes { padding-top: 80px; }
+#routes {
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
 
+/* ── Section header ── */
 .routes-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-bottom: 40px;
+  margin-bottom: var(--space-10);
+  gap: var(--space-4);
+  flex-wrap: wrap;
 }
 
+/* ── 3-column card grid, responsive ── */
 .routes-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 24px;
 }
 
-/* Card */
+@media (max-width: 900px) {
+  .routes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .routes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Card base ── */
 .route-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: all var(--transition-base);
+  border-radius: var(--radius-xl) !important;
+  overflow: hidden !important;
   cursor: pointer;
-}
-.route-card:hover {
-  border-color: rgba(26, 107, 255, 0.4);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-card), 0 0 0 1px rgba(26, 107, 255, 0.2);
+  position: relative;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface2) !important;
 }
 
-/* Route image banner */
+.route-card:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(26, 107, 255, 0.3) !important;
+}
+
+/* ── Image / gradient banner — inspired by Flixbus city cards ── */
 .route-img {
-  height: 130px;
+  height: 170px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 52px;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: var(--space-4) var(--space-4);
+  font-size: 56px;
   position: relative;
   overflow: hidden;
 }
-.route-img-karachi   { background: linear-gradient(135deg, #0a1628, #1a3a6b); }
-.route-img-lahore    { background: linear-gradient(135deg, #1a0a2e, #4a1a7a); }
-.route-img-islamabad { background: linear-gradient(135deg, #0a280a, #1a5a1a); }
-.route-img-peshawar  { background: linear-gradient(135deg, #280a0a, #7a1a1a); }
-.route-img-quetta    { background: linear-gradient(135deg, #1a1a0a, #5a5a1a); }
-.route-img-multan    { background: linear-gradient(135deg, #0a1a1a, #1a5a5a); }
 
-/* Card body */
-.route-body { padding: 18px 20px; }
+/* City gradient palettes — premium dark city tones */
+.route-img-karachi {
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(6, 8, 15, 0.9) 100%),
+    linear-gradient(135deg, #0d1f3c 0%, #1a3a70 50%, #0a1628 100%);
+}
 
+.route-img-lahore {
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(6, 8, 15, 0.9) 100%),
+    linear-gradient(135deg, #1a0d30 0%, #3d1a75 50%, #150a24 100%);
+}
+
+.route-img-islamabad {
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(6, 8, 15, 0.9) 100%),
+    linear-gradient(135deg, #0d2e0d 0%, #1a5c1a 50%, #0a1e0a 100%);
+}
+
+.route-img-peshawar {
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(6, 8, 15, 0.9) 100%),
+    linear-gradient(135deg, #2e0d0d 0%, #6b1d1d 50%, #1e0a0a 100%);
+}
+
+.route-img-quetta {
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(6, 8, 15, 0.9) 100%),
+    linear-gradient(135deg, #1a1a0d 0%, #5c5c1a 50%, #0f0f0a 100%);
+}
+
+.route-img-multan {
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(6, 8, 15, 0.9) 100%),
+    linear-gradient(135deg, #0d2020 0%, #1a6060 50%, #0a1414 100%);
+}
+
+.route-img-hyderabad {
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(6, 8, 15, 0.9) 100%),
+    linear-gradient(135deg, #200d1a 0%, #6b2050 50%, #140a10 100%);
+}
+
+/* Decorative grid overlay on the image */
+.route-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+/* City emoji / icon */
+.route-img>span,
+.route-img>em {
+  position: relative;
+  z-index: 1;
+  font-style: normal;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* ── Card body ── */
+.route-body {
+  padding: var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Route name: City → City */
 .route-from-to {
   font-family: var(--font-head);
-  font-size: 16px;
-  font-weight: 700;
+  font-size: var(--text-xl);
+  font-weight: 800;
   color: var(--text);
-  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
-.route-from-to .arrow { color: var(--blue); margin: 0 8px; }
 
+.route-from-to .arrow {
+  color: var(--color-primary);
+  margin: 0 var(--space-2);
+  font-size: 0.85em;
+}
+
+/* Meta row: price + time */
 .route-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: var(--space-1);
 }
+
 .route-price {
-  font-size: 20px;
-  font-weight: 800;
   font-family: var(--font-head);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
+
 .route-price span {
-  font-size: 12px;
+  font-size: var(--text-xs);
   color: var(--muted);
   font-weight: 400;
   font-family: var(--font-body);
+  margin-left: 2px;
 }
-.route-info { font-size: 12px; color: var(--muted); }
+
+.route-info {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* ── Hover shimmer on card edge ── */
+.route-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(26, 107, 255, 0.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+.route-card:hover::after {
+  opacity: 1;
+}

@@ -1,62 +1,167 @@
-/* ─────────────────────────────────────────────
-   DESIGN TOKENS — single source of truth
-   All colors, fonts, radii, shadows live here.
-   ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS — venService v2.0
+   Enterprise design system. Single source of truth.
+   ═══════════════════════════════════════════════════════════ */
+
 :root {
-  /* Brand colors */
-  --blue: #1a6bff;
-  --blue-glow: rgba(26, 107, 255, 0.35);
-  --blue-dim: rgba(26, 107, 255, 0.12);
-  --green: #00d68f;
-  --amber: #f5a623;
-  --red: #ff4757;
+  /* ── Primitive Color Palette ───────────────────────────── */
+  --blue-50: #eef3ff;
+  --blue-100: #dce7ff;
+  --blue-200: #b9cffe;
+  --blue-300: #7aacfd;
+  --blue-400: #3d87fc;
+  --blue-500: #1a6bff;
+  --blue-600: #0c53e0;
+  --blue-700: #0a41b5;
+  --blue-800: #0d3590;
+  --blue-900: #122e73;
 
-  /* Surfaces */
-  --bg: #0a0d14;
-  --surface: #111520;
-  --surface2: #161c2d;
+  --green-400: #34d399;
+  --green-500: #10b981;
+  --green-600: #059669;
+
+  --amber-300: #fcd34d;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --amber-600: #d97706;
+
+  --red-400: #f87171;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+
+  /* ── Semantic Aliases ──────────────────────────────────── */
+  --color-primary: var(--blue-500);
+  --color-primary-hover: var(--blue-400);
+  --color-primary-dim: rgba(26, 107, 255, 0.12);
+  --color-primary-glow: rgba(26, 107, 255, 0.35);
+
+  --color-success: var(--green-500);
+  --color-warning: var(--amber-500);
+  --color-danger: var(--red-500);
+  --color-info: var(--blue-400);
+
+  /* Legacy aliases kept for backwards compat */
+  --blue: var(--blue-500);
+  --blue-glow: var(--color-primary-glow);
+  --blue-dim: var(--color-primary-dim);
+  --green: var(--green-500);
+  --amber: var(--amber-500);
+  --red: var(--red-500);
+
+  /* ── Surface System ────────────────────────────────────── */
+  --bg: #06080f;
+  --bg-alt: #090c16;
+  --surface: #0f1221;
+  --surface2: #141929;
+  --surface3: #1a2035;
+  --surface4: #202540;
+
+  /* Legacy */
   --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.13);
 
-  /* Text */
+  /* ── Text Scale ────────────────────────────────────────── */
   --text: #e8eaf2;
+  --text-secondary: #a8aac8;
   --muted: #6b7394;
+  --text-inverse: #06080f;
 
-  /* Typography */
-  --font-head: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  /* ── Typography ────────────────────────────────────────── */
+  --font-head: 'Syne', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Spacing scale */
-  --gap-xs: 4px;
-  --gap-sm: 8px;
-  --gap-md: 16px;
-  --gap-lg: 24px;
-  --gap-xl: 40px;
-  --gap-2xl: 60px;
+  /* Fluid type scale using clamp(min, preferred, max) */
+  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
+  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+  --text-md: clamp(0.9rem, 0.85rem + 0.25vw, 1rem);
+  --text-lg: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --text-xl: clamp(1.1rem, 0.95rem + 0.75vw, 1.25rem);
+  --text-2xl: clamp(1.25rem, 1rem + 1.25vw, 1.5rem);
+  --text-3xl: clamp(1.5rem, 1.1rem + 2vw, 2rem);
+  --text-4xl: clamp(1.8rem, 1.2rem + 3vw, 2.5rem);
+  --text-5xl: clamp(2rem, 1rem + 5vw, 3.5rem);
+  --text-hero: clamp(2.5rem, 0.5rem + 9vw, 5.5rem);
+
+  /* ── Spacing Scale ─────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Legacy gap aliases */
+  --gap-xs: var(--space-1);
+  --gap-sm: var(--space-2);
+  --gap-md: var(--space-4);
+  --gap-lg: var(--space-6);
+  --gap-xl: var(--space-10);
+  --gap-2xl: var(--space-16);
   --gap-3xl: 100px;
 
-  /* Border radii */
+  /* ── Border Radii ──────────────────────────────────────── */
+  --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-2xl: 24px;
+  --radius-3xl: 32px;
+  --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.4);
-  --shadow-blue: 0 0 24px var(--blue-glow);
-  --shadow-deep: 0 32px 80px rgba(0, 0, 0, 0.5);
+  /* ── Shadows ───────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-deep: 0 32px 80px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 24px var(--color-primary-glow);
+  --shadow-green: 0 0 20px rgba(16, 185, 129, 0.3);
+  --shadow-amber: 0 0 20px rgba(245, 158, 11, 0.3);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-base: 0.25s ease;
-  --transition-slow: 0.4s ease;
+  /* Legacy */
+  --shadow-blue: var(--shadow-glow);
 
-  /* Z-index layers */
+  /* ── Animation & Easing ────────────────────────────────── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  /* Legacy */
+  --transition-fast: var(--duration-fast) var(--ease-out);
+  --transition-base: var(--duration-base) var(--ease-out);
+  --transition-slow: var(--duration-slow) var(--ease-out);
+
+  /* ── Z-Index Layers ────────────────────────────────────── */
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 50;
   --z-nav: 100;
+  --z-sticky: 110;
+  --z-overlay: 150;
   --z-modal: 200;
   --z-toast: 300;
+  --z-max: 9999;
 
-  /* Layout */
-  --sidebar-width: 220px;
-  --sidebar-collapsed-width: 70px;
+  /* ── Layout ────────────────────────────────────────────── */
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 72px;
+  --navbar-height: 68px;
+  --content-max-width: 1240px;
+  --content-padding: clamp(var(--space-4), 4vw, var(--space-10));
 }
