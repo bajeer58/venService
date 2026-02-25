@@ -17,6 +17,8 @@ import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import ServicesSection from '../features/services/ServicesSection';
+import { AnnouncementHero } from '../features/announcements';
+
 
 // ── Animation helpers ─────────────────────────────────────────
 
@@ -166,6 +168,11 @@ export default function HomePage() {
           ))}
         </motion.div>
       </div>
+
+      {/* ══════════════════════════════════════════════════
+          ANNOUNCEMENT HERO — live image carousel
+          ══════════════════════════════════════════════════ */}
+      <AnnouncementHero tenantId="venservice-pk" autoPlayMs={5000} />
 
       {/* ══════════════════════════════════════════════════
           TRUST BAR — scrolling marquee
